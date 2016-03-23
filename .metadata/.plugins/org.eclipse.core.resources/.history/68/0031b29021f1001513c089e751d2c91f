@@ -1,0 +1,18 @@
+package libsys;
+
+public class Customer {
+	
+	private String username;
+	private String password;
+	
+	boolean login(String password) {
+		//TODO
+		return false;
+	}
+	
+	Librarian makeLibrary() {
+		//TODO
+		return null;
+	}
+	
+}

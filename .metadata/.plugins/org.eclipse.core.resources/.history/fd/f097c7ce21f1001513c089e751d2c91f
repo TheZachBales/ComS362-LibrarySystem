@@ -1,0 +1,30 @@
+package libsys;
+
+public class LibraryController {
+	
+	boolean createCustomer(String username, String password) {
+		//TODO
+		return false;
+	}
+	
+	boolean createLibrarian(String username, String password) {
+		//TODO
+		return false;
+	}
+	
+	boolean upgradeCustomer(String username) {
+		//TODO
+		return false;
+	}
+	
+	boolean loginCustomer(String username, String password) {
+		//TODO
+		return false;
+	}
+	
+	boolean loginLibrarian(String username, String password) {
+		//TODO
+		return false;
+	}
+	
+}

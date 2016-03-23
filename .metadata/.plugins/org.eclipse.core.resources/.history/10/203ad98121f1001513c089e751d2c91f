@@ -1,0 +1,10 @@
+package libsys;
+
+public class Librarian {
+	
+	boolean login(String password) {
+		//TODO
+		return false;
+	}
+	
+}

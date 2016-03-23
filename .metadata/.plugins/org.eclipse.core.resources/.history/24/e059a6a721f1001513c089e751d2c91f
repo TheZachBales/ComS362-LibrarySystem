@@ -1,0 +1,30 @@
+package libsys;
+
+public class DatabaseController {
+	
+	boolean putCustomer(Customer c) {
+		//TODO
+		return false;
+	}
+	
+	Customer getCustomer(String username) {
+		//TODO
+		return null;
+	}
+	
+	boolean removeCustomer(String username) {
+		//TODO
+		return false;
+	}
+	
+	boolean putLibrarian(Librarian l) {
+		//TODO
+		return false;
+	}
+	
+	Librarian getLibrarian(String username) {
+		//TODO
+		return null;
+	}
+	
+}
