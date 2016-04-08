@@ -1,58 +1,82 @@
 package libsys;
 
+import java.util.List;
+
 public class DatabaseController {
 	
 	/**
-	 * Puts the Customer into the database.
+	 * Puts the Account into the database.
 	 * 
-	 * @param c The Customer to be placed into the database.
-	 * @return true if the Customer is successfully entered, false if not
+	 * @param a The Account to be placed into the database.
+	 * @return true if the Account is successfully entered, false if not
 	 */
-	public boolean putCustomer(Customer c) {
+	public boolean putAccount(Account a) {
 		//TODO
 		return false;
 	}
 	
 	/**
-	 * Gets the Customer object from the database that has the given username.
+	 * Gets a list of all Accounts in the system.
 	 * 
-	 * @param username the username of the Customer to be retrieved
-	 * @return the Customer in the database with the given username
+	 * @return a list of all the Accounts in the system
 	 */
-	public Customer getCustomer(String username) {
+	public List<Account> listUsers() {
 		//TODO
 		return null;
 	}
 	
 	/**
-	 * Removes the Customer in the database with the given username.
+	 * Gets the Account object from the database that has the given username.
 	 * 
-	 * @param username the username of the Customer to be removed
-	 * @return true if the Customer is successfully removed, false if not
+	 * @param username the username of the Account to be retrieved
+	 * @return the Account in the database with the given username
 	 */
-	public boolean removeCustomer(String username) {
+	public Account getAccount(String username) {
+		//TODO
+		return null;
+	}
+	
+	/**
+	 * Removes the book with the given title and author from the database
+	 * 
+	 * @param title the title of the book to be removed
+	 * @param author the author of the book to be removed
+	 * @return true if the book has been successfully removed, false if not
+	 */
+	public boolean removeBook(String title, String author) {
 		//TODO
 		return false;
 	}
 	
 	/**
-	 * Puts the Librarian object into the database.
+	 * Puts the given Shelf object into the database
 	 * 
-	 * @param l the Librarian to be placed into the database
-	 * @return true if the Librarian is successfully entered, false if not
+	 * @param s the shelf to be inserted into the database
+	 * @return true if the shelf has been successfully put into the database, false if not
 	 */
-	public boolean putLibrarian(Librarian l) {
+	public boolean putShelf(Shelf s) {
 		//TODO
 		return false;
 	}
 	
 	/**
-	 * Gets the Librarian object from the database with the given username.
+	 * Puts the given Book object into the database
 	 * 
-	 * @param username the username of the Librarian object to be retrieved from the database
-	 * @return the Librarian object with the given username
+	 * @param b the Book object to be put into the database
+	 * @return true if the book has been successfully put into the database, false if not
 	 */
-	public Librarian getLibrarian(String username) {
+	public boolean putBook(Book b) {
+		//TODO
+		return false;
+	}
+	
+	/**
+	 * Gets from the database the shelf with the given ID number
+	 * 
+	 * @param sid the ID number of the Shelf object to be gotten from the database
+	 * @return the Shelf object with the given ID number
+	 */
+	public Shelf getShelf(int sid) {
 		//TODO
 		return null;
 	}
