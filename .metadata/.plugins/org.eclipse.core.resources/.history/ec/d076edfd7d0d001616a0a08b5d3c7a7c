@@ -1,0 +1,11 @@
+package libsys;
+
+public class Main {
+
+	public static void main(String[] args){
+		DatabaseController dbc = new DatabaseController();
+		Account a = new Account("zlbales", "password", 0);
+		dbc.putAccount(a);
+	}
+	
+}

@@ -1,0 +1,92 @@
+package libsys;
+
+import java.util.List;
+
+public class Main {
+
+	public static void main(String[] args){
+		//Initialize DatabaseController
+		DatabaseController dbc = new DatabaseController();
+		
+		//Test putAccount
+		System.out.println("putAccount");
+		Account a1 = new Account("zlbales", "password", 0);
+		if(dbc.putAccount(a1)) {
+			System.out.println("Successfully put account!");
+		}
+		else {
+			System.out.println("Failed to put account!");
+		}
+		System.out.println();
+		
+		//Test listUsers
+		System.out.println("listUsers");
+		List<Account> users = dbc.listUsers();
+		if(users != null) {
+			for(int i = 0; i < users.size(); i++) {
+				System.out.println(users.get(i).getUsername());
+			}
+		}
+		else {
+			System.out.println("listUsers failed");
+		}
+		System.out.println();
+		
+		//Test getAccount
+		System.out.println("getAccount");
+		Account a2 = dbc.getAccount("zlbales");
+		if(a2 != null) {
+			System.out.println(a2.getUsername());
+		}
+		else {
+			System.out.println("getAccount failed");
+		}
+		System.out.println();
+		
+		//Test putShelf
+		System.out.println("putShelf");
+		Shelf s1 = new Shelf(1, "Fantasy", 100);
+		if(dbc.putShelf(s1)) {
+			System.out.println("Shelf successfully put!");
+		}
+		else {
+			System.out.println("Shelf put failed!");
+		}
+		System.out.println();
+		
+		//Test putBook
+		System.out.println("putBook");
+		Book b1 = new Book("A Game of Thrones", "George R. R. Martin", "Fantasy", "978-0553593716");
+		if(dbc.putBook(b1)) {
+			System.out.println("Book successfully put!");
+		}
+		else {
+			System.out.println("Book put failed!");
+		}
+		System.out.println();
+		
+		//Test getShelf
+		System.out.println("getShelf");
+		Shelf s2 = dbc.getShelf(1);
+		if(s2 != null) {
+			System.out.println("Genre: " + s2.getGenre());
+			System.out.println("Capacity: " + s2.getCapacity());
+		}
+		else {
+			System.out.println("Shelf get failed!");
+		}
+		System.out.println();
+		
+		//Test getBook
+		System.out.println("getBook");
+		Book b2 = dbc.getBook("A Game of Thrones", "George R. R. Martin");
+		if(b2 != null) {
+			System.out.println("Title: " + b2.getTitle());
+			System.out.println("Author: " + b2.getAuthor());
+		}
+		else {
+			System.out.println("Book getting failed!");
+		}
+	}
+	
+}

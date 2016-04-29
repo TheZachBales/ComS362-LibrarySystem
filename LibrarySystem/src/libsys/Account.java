@@ -5,6 +5,21 @@ public class Account {
 	private String username;
 	private String password;
 	private int type;
+	private Book currentBook;
+	
+	public Account(String username, String password, int type) {
+		this.username = username;
+		this.password = password;
+		this.type = type;
+		this.currentBook = null;
+	}
+	
+	public Account(String username, String password, int type, Book b) {
+		this.username = username;
+		this.password = password;
+		this.type = type;
+		this.currentBook = b;
+	}
 	
 	/**
 	 * Checks if the password given is correct and returns the type of the Account if it is.
@@ -26,6 +41,37 @@ public class Account {
 	public boolean changeAccount(int at) {
 		//TODO
 		return false;
+	}
+	
+	public boolean checkOut(Book b) {
+		//TODO
+		return false;
+	}
+	
+	public boolean returnBook() {
+		//TODO
+		return false;
+	}
+	
+	public int getAccountType() {
+		//TODO
+		return -1;
+	}
+	
+	public String getUsername() {
+		return this.username;
+	}
+	
+	public String getPassword() {
+		return this.password;
+	}
+	
+	public int getType() {
+		return this.type;
+	}
+	
+	public Book getCurrentBook() {
+		return this.currentBook;
 	}
 	
 }

@@ -1,0 +1,47 @@
+package libsys;
+
+import java.util.List;
+
+public class Main {
+
+	public static void main(String[] args){
+		//Initialize DatabaseController
+		DatabaseController dbc = new DatabaseController();
+		
+		//Test putAccount
+		System.out.println("putAccount");
+		Account a1 = new Account("zlbales", "password", 0);
+		if(dbc.putAccount(a1)) {
+			System.out.println("Successfully put account!");
+		}
+		else {
+			System.out.println("Failed to put account!");
+		}
+		System.out.println();
+		
+		//Test listUsers
+		System.out.println("listUsers");
+		List<Account> users = dbc.listUsers();
+		if(users != null) {
+			for(int i = 0; i < users.size(); i++) {
+				System.out.println(users.get(i).getUsername());
+			}
+		}
+		else {
+			System.out.println("listUsers failed");
+		}
+		System.out.println();
+		
+		//Test getAccount
+		System.out.println("getAccount");
+		Account a2 = dbc.getAccount("zlbales");
+		if(a2 != null) {
+			System.out.println(a2.getUsername());
+		}
+		else {
+			System.out.println("getAccount failed");
+		}
+		System.out.println();
+	}
+	
+}

@@ -1,0 +1,9 @@
+package libsys;
+
+public class Request {
+
+	private Account customer;
+	private Book book;
+	private String status;
+	
+}

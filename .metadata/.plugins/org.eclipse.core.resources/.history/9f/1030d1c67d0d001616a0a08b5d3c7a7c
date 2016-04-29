@@ -1,0 +1,10 @@
+package libsys;
+
+public class Main {
+
+	public static void main(String[] args){
+		DatabaseController dbc = new DatabaseController();
+		dbc.testConnection();
+	}
+	
+}
