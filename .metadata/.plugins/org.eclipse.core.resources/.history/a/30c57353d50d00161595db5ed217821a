@@ -643,7 +643,7 @@ public class DatabaseController {
 		Connection conn = null;
 		String dbUrl = "jdbc:mysql://173.17.63.77:3306/Library_db";
 		String user = "team7";
-		String password = "";
+		String password = "^h;>8jp.";
 		try {
 			conn = DriverManager.getConnection(dbUrl, user, password);
 		}

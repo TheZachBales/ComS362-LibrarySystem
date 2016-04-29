@@ -53,9 +53,6 @@ public class DatabaseController {
 	
 	Connection conn;
 	
-	/**
-	 * Main public constructor for creating a DatabaseController.
-	 */
 	public DatabaseController(){
 		this.conn = createConnection();
 	}
@@ -258,107 +255,6 @@ public class DatabaseController {
 		}
 	}
 	
-	/**
-	 * Gets a list of books with the given title.
-	 * 
-	 * @param title
-	 * @return list of books with the given title
-	 */
-	public List<Book> getBookByTitle(String title) {
-		try {
-			List<Book> l = new ArrayList<Book>();
-			Statement stmt = conn.createStatement();
-			ResultSet books = stmt.executeQuery("SELECT * FROM Books WHERE Title='" + title + "'");
-			while(books.next()) {
-				Book b = null;
-				Shelf s = null;
-				Account a = null;
-				
-				if(books.getInt("ShelfID") > 0) {
-					s = getShelf(books.getInt("ShelfID"));
-				}
-				
-				if(books.getString("CurrentCustomer") != null) {
-					a = getAccount(books.getString("CurrentCustomer"));
-				}
-				
-				b = new Book(books.getString("Title"), books.getString("Author"), books.getString("Genre"), books.getString("ISBN"), s, books.getInt("Status"), a);
-				l.add(b);
-			}
-			
-			return l;
-		}
-		catch(SQLException e) {
-			return null;
-		}
-	}
-	
-	/**
-	 * Gets a list of books with the given author.
-	 * 
-	 * @param author
-	 * @return the list of books with tht given author
-	 */
-	public List<Book> getBookByAuthor(String author) {
-		try {
-			List<Book> l = new ArrayList<Book>();
-			Statement stmt = conn.createStatement();
-			ResultSet books = stmt.executeQuery("SELECT * FROM Books WHERE Author='" + author + "'");
-			while(books.next()) {
-				Book b = null;
-				Shelf s = null;
-				Account a = null;
-				
-				if(books.getInt("ShelfID") > 0) {
-					s = getShelf(books.getInt("ShelfID"));
-				}
-				
-				if(books.getString("CurrentCustomer") != null) {
-					a = getAccount(books.getString("CurrentCustomer"));
-				}
-				
-				b = new Book(books.getString("Title"), books.getString("Author"), books.getString("Genre"), books.getString("ISBN"), s, books.getInt("Status"), a);
-				l.add(b);
-			}
-			
-			return l;
-		}
-		catch(SQLException e) {
-			return null;
-		}
-	}
-	
-	/**
-	 * Gets a list of shelves based on the genre.
-	 * 
-	 * @param genre
-	 * @return a list of shelves with tht given genre
-	 */
-	public List<Shelf> getShelf(String genre) {
-		try {
-			List<Shelf> l = new ArrayList<Shelf>();
-			Statement stmt = conn.createStatement();
-			ResultSet shelves = stmt.executeQuery("SELECT * FROM Shelves WHERE Genre='" + genre + "'");
-			while(shelves.next()) {
-				List<Book> books = getBooksByShelf(shelves.getInt("ShelfId"));
-				Shelf s = new Shelf(shelves.getInt("ShelfID"), shelves.getString("Genre"), shelves.getInt("Capacity"), books);
-				l.add(s);
-			}
-			
-			return l;
-		}
-		catch(SQLException e) {
-			return null;
-		}
-	}
-	
-	/**
-	 * Gets the book with the given title and author.
-	 * 
-	 * @param title
-	 * @param author
-	 * @return book with the given title an author
-	 */
 	public Book getBook(String title, String author) {
 		try {
 			Statement stmt = conn.createStatement();
@@ -389,11 +285,6 @@ public class DatabaseController {
 		}
 	}
 	
-	/**
-	 * Gets a list off all shelves
-	 * 
-	 * @return a list of all shelves
-	 */
 	public List<Shelf> getAllShelves() {
 		try {
 			List<Shelf> l = new ArrayList<Shelf>();
@@ -412,11 +303,6 @@ public class DatabaseController {
 		}
 	}
 	
-	/**
-	 * Gets all books in the library.
-	 * 
-	 * @return A list of books in the library
-	 */
 	public List<Book> listLibraryBooks() {
 		try {
 			List<Book> l = new ArrayList<Book>();
@@ -446,11 +332,6 @@ public class DatabaseController {
 		}
 	}
 	
-	/**
-	 * Gets a list of all books  in the catalog
-	 * 
-	 * @return a list of all books in the catalog
-	 */
 	public List<Book> listCatalogBooks() {
 		try {
 			List<Book> l = new ArrayList<Book>();
@@ -480,12 +361,6 @@ public class DatabaseController {
 		}
 	}
 	
-	/**
-	 * Put a Request object into the database
-	 * 
-	 * @param r
-	 * @return true if the Request object was successfully put into the database, false otherwise
-	 */
 	public boolean putRequest(Request r) {
 		try {
 			Statement stmt = conn.createStatement();
@@ -507,12 +382,6 @@ public class DatabaseController {
 		}
 	}
 	
-	/**
-	 * Get a Request object from the database
-	 * 
-	 * @param rid
-	 * @return the Request object with the given request id
-	 */
 	public Request getRequest(int rid) {
 		try {
 			Statement stmt = conn.createStatement();
@@ -532,11 +401,6 @@ public class DatabaseController {
 		}
 	}
 	
-	/**
-	 * Gets a list of all requests.
-	 * 
-	 * @return a list of all requests in the system
-	 */
 	public List<Request> viewRequests() {
 		try {
 			List<Request> l = new ArrayList<Request>();
@@ -558,11 +422,6 @@ public class DatabaseController {
 		}
 	}
 	
-	/**
-	 * Gets a list of all checked out books.
-	 * 
-	 * @return a list of all checked out books
-	 */
 	public List<Book> getCheckouts() {
 		try {
 			List<Book> l = new ArrayList<Book>();
@@ -592,12 +451,6 @@ public class DatabaseController {
 		}
 	}
 	
-	/**
-	 * Gets a list of books by their shelf id number
-	 * 
-	 * @param sid
-	 * @return a list of books stored on the given shelf
-	 */
 	private List<Book> getBooksByShelf(int sid) {
 		try {
 			List<Book> l = new ArrayList<Book>();
@@ -627,11 +480,6 @@ public class DatabaseController {
 		}
 	}
 	
-	/**
-	 * Creates a connection to the database
-	 * 
-	 * @return a Connection object that is connected to the database
-	 */
 	private Connection createConnection() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
