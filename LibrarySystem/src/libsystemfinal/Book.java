@@ -1,0 +1,359 @@
+package libsystemfinal;
+
+public class Book {
+
+	public static final int CATALOG = 0;
+	public static final int LIBRARY = 1;
+	public static final int CHECKED_OUT = 2;
+	public static final int RESERVED = 3;
+	public static final int REQUESTED = 4;
+	private String title;
+	private String author;
+	private String genre;
+	private String ISBN;
+	private Shelf shelf;
+	private int shelfID;
+	private String account;
+	private int status;
+	private DatabaseController dc;
+
+	/**
+	 * Constructs a book object with given info
+	 * 
+	 * @param title
+	 *            given title
+	 * @param author
+	 *            given author
+	 * @param genre
+	 *            given genre
+	 * @param ISBN
+	 *            given isbn
+	 */
+	public Book(String Title, String author, String genre, String ISBN) {
+
+		this.title = Title;
+		this.author = author;
+		this.genre = genre;
+		this.ISBN = ISBN;
+		dc = new DatabaseController();
+
+	}
+
+	/**
+	 * constructs a book with the given info
+	 * 
+	 * @param Title
+	 *            given title
+	 * @param authors
+	 *            given author
+	 */
+	public Book(String Title, String authors) {
+
+		title = Title;
+		author = authors;
+	}
+
+	/**
+	 * Constructs a book object with given info
+	 * 
+	 * @param title
+	 *            given title
+	 * @param author
+	 *            given author
+	 * @param genre
+	 *            given genre
+	 * @param ISBN
+	 *            given isbn
+	 * @param s
+	 *            given shelf
+	 * @param int1
+	 * @param a
+	 *            account associated
+	 */
+	public Book(String Title, String author, String genre, String ISBN,
+			Shelf s, int int1, Account a) {
+
+		this.title = title;
+		this.author = author;
+		this.genre = genre;
+		this.ISBN = ISBN;
+		this.shelf = s;
+		this.account = a.getUsername();
+		dc = new DatabaseController();
+	}
+	
+	public Book(String title, String author, String genre, String ISBN, int shelfID, int status, String account) {
+		this.title = title;
+		this.author = author;
+		this.genre = genre;
+		this.ISBN = ISBN;
+		this.shelfID = shelfID;
+		this.status = status;
+		this.account = account;
+		this.dc = new DatabaseController();
+	}
+
+	/**
+	 * Associates this Book object with the Shelf object given.
+	 * 
+	 * @param s
+	 *            the Shelf object to attach to this book
+	 * @return true if the Shelf has been successfully set, false if not
+	 */
+	public boolean putBookOnShelf(Shelf s) {
+		shelfID = s.getID();
+		status = Book.LIBRARY;
+		return true;
+	}
+
+	/**
+	 * checks out a book with the given account
+	 * 
+	 * @param a
+	 *            account that is checking out
+	 * @return true on success
+	 */
+	public boolean checkOut(Account a) {
+
+		account = a.getUsername();
+		status = CHECKED_OUT;
+		return true;
+	}
+
+	/**
+	 * gets account that has the book checked out
+	 * 
+	 * @return account that has book
+	 */
+	public Account getCheckOutAccount() {
+
+		return dc.getAccount(account);
+
+	}
+
+	/**
+	 * returns book to library
+	 * 
+	 * @return true on success
+	 */
+	public boolean returnToLibrary() {
+
+		account = null;
+		status = LIBRARY;
+		return true;
+	}
+
+	/**
+	 * reserves book
+	 * 
+	 * @return true on success
+	 */
+	public boolean reserve() {
+
+		status = RESERVED;
+		return true;
+
+	}
+
+	/**
+	 * unreserves book
+	 * 
+	 * @return true on success
+	 */
+	public boolean unreserve() {
+
+		status = LIBRARY;
+		return true;
+
+	}
+
+	/**
+	 * checks the status of the book
+	 * 
+	 * @return status of book
+	 */
+	public int checkStatus() {
+
+		return status;
+
+	}
+
+	// /**
+	// * sets a request on this book
+	// *
+	// * @return id of the request
+	// */
+	// public int setRequest(Account a) {
+	//
+	//
+	// // create new request with this info
+	//
+	// status = REQUESTED;
+	// return 0;
+	//
+	// }
+
+	/**
+	 * Updates the books status
+	 */
+	public void updateStatus(int status) {
+
+		this.status = status;
+
+	}
+
+	/**
+	 * returns shelf the book is on
+	 * 
+	 * @return shelf of the book
+	 */
+	public Shelf getShelf() {
+
+		return dc.getShelf(shelfID);
+	}
+
+	/**
+	 * returns the title of the book
+	 * 
+	 * @return title of book
+	 */
+	public String getTitle() {
+
+		return title;
+	}
+
+	/**
+	 * returns the author of the book
+	 * 
+	 * @return author of book
+	 */
+	public String getAuthor() {
+
+		return author;
+	}
+
+	/**
+	 * returns the customer that has the book
+	 * 
+	 * @return customer
+	 */
+	public Account getCurrentCustomer() {
+
+		return dc.getAccount(account);
+	}
+
+	/**
+	 * returns the genre of the book
+	 * 
+	 * @return genre of book
+	 */
+	public String getGenre() {
+
+		return genre;
+	}
+
+	/**
+	 * return isbn of book
+	 * 
+	 * @return isbn of book
+	 */
+	public String getISBN() {
+
+		return ISBN;
+	}
+
+	/**
+	 * returns the account of the book
+	 * 
+	 * @return the account
+	 */
+	public Account getAccount() {
+
+		return dc.getAccount(account);
+	}
+
+	/**
+	 * sets the account of the book
+	 * 
+	 * @param account
+	 *            the account to set
+	 */
+	public void setAccount(String account) {
+
+		this.account = account;
+	}
+
+	/**
+	 * sets title of book
+	 * 
+	 * @param title
+	 *            the title to set
+	 */
+	public void setTitle(String title) {
+
+		this.title = title;
+	}
+
+	/**
+	 * sets author of book
+	 * 
+	 * @param author
+	 *            the author to set
+	 */
+	public void setAuthor(String author) {
+
+		this.author = author;
+	}
+
+	/**
+	 * sets genre of book
+	 * 
+	 * @param genre
+	 *            the genre to set
+	 */
+	public void setGenre(String genre) {
+
+		this.genre = genre;
+	}
+
+	/**
+	 * sets isbn of book
+	 * 
+	 * @param iSBN
+	 *            the iSBN to set
+	 */
+	public void setISBN(String iSBN) {
+
+		ISBN = iSBN;
+	}
+
+	/**
+	 * sets shelf of book
+	 * 
+	 * @param shelf
+	 *            the shelf to set
+	 */
+	public void setShelf(int shelfID) {
+
+		this.shelfID = shelfID;
+	}
+
+	/**
+	 * returns the status of the book
+	 * 
+	 * @return book's status
+	 */
+	public int getStatus() {
+
+		return status;
+	}
+
+	public String toString() {
+
+		String s = "Title: " + this.getTitle() + " Author: " + this.getAuthor()
+				+ " Genre: " + this.genre + " ISBN: " + this.getISBN();
+		return s;
+
+	}
+
+}

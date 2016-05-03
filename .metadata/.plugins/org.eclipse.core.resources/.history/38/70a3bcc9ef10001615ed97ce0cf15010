@@ -1,0 +1,293 @@
+package libsystemfinal;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class TextUI {
+
+	public static void main(String[] args) {
+
+		LibraryController lc = new LibraryController();
+		DatabaseController dc = new DatabaseController();
+		boolean end = false, dosomething = true;
+		String username = null;
+		String password = null;
+
+		System.out.println("Welcome to the library system!");
+		System.out.println("Are you a new user? Enter y/n");
+
+		Scanner s = new Scanner(System.in);
+		while (!end) {
+			// make sure the input is valid
+			if (!s.hasNext()) {
+				System.out.println("Invalid answer. Enter y/n");
+				continue;
+			}
+
+			// new account
+			if (s.next().equals("y")) {
+				System.out
+						.println("Enter your desired username followed by your password");
+				// get username and password
+				username = s.next();
+				password = s.next();
+
+				// check that the info is valid
+				if (!lc.createAccount(username, password)) {
+					System.out
+							.println("Your username is taken! Please enter a new one followed by a password.");
+					continue;
+				}
+				// it is valid
+				else {
+					lc.createAccount(username, password);
+					lc.login(username, password);
+					System.out
+							.println("Account creation was successful and you have been logged in!");
+				}
+			}
+
+			// returning account
+			else {
+				System.out
+						.println("Welcome back! Enter your username and password");
+				if (s.hasNext()) {
+					// get username and password
+					username = s.next();
+					password = s.next();
+				}
+				int accountType = lc.login(username, password);
+				if (accountType == -1) {
+					System.out.println("Invaild login. Try again");
+					continue;
+				}
+				System.out.println("Welcome " + username + "!");
+				while (dosomething) {
+					System.out.println("What would you like to do?");
+					// System.out.println("Account type: " + accountType);
+
+					// standard user
+					if (accountType == 0) {
+						System.out.println("1. Logout");
+						System.out.println("2. View your account history");
+						System.out.println("3. View your checkouts");
+						System.out.println("4. Search for books by title");
+						System.out.println("5. Search for books by author");
+						System.out.println("6. Search for books by genre");
+						System.out
+								.println("7. Request for a book to be added to the library");
+						System.out.println("8. Reserve a book");
+						System.out.println("9. Unreserve a book");
+						System.out.println("10. Quit");
+					}
+					// librarian
+					else if (accountType == 1) {
+						System.out.println("a. Logout");
+						System.out.println("b. Add a book to a shelf");
+						System.out.println("c. View an account's checkouts");
+						System.out.println("d. Search for books by title");
+						System.out.println("e. Search for books by author");
+						System.out.println("f. Search for books by genre");
+						System.out
+								.println("g. Update a customer to a librarian");
+						System.out.println("h. View all accounts");
+						System.out.println("i. Add a shelf");
+						System.out.println("j. Add a book");
+						System.out.println("k. Remove a book");
+						System.out.println("l. Checkout a book");
+						System.out.println("m. Return book");
+						System.out.println("n. View all checkouts");
+						System.out.println("o. View all requests");
+						System.out.println("p. Accept a request");
+						System.out.println("q. Deny a request");
+						System.out.println("r. Quit");
+					}
+
+					// get the input from the client
+					String letter = "";
+					int number = 0;
+					if (s.hasNextInt()) {
+						number = s.nextInt();
+					}
+					else {
+						letter = s.next();
+					}
+
+					if (letter.equals("a") || number == 1) {
+						System.out.println("You have logged out!");
+						lc.logout(username);
+						end = true;
+						dosomething = false;
+
+					}
+					else if (letter.equals("b")) {
+						System.out
+								.println("Provide the book title and author followed by shelf id");
+						lc.addBookToShelf(s.next(), s.next(), s.nextInt());
+						System.out.println("Added");
+					}
+
+					else if (letter.equals("c")) {
+						if (accountType == 1) {
+							System.out
+									.println("Provide username of account to view");
+						}
+						String user = s.next();
+						Account a = dc.getAccount(user);
+
+						System.out.println(a.checkoutList());
+						continue;
+
+					}
+
+					else if (letter.equals("d") || number == 4) {
+						System.out
+								.println("What title would you like to search for?");
+						s.nextLine();
+						ArrayList<Book> books = lc.getBookByTitle(s.nextLine());
+						for (int i = 0; i < books.size(); i++) {
+							System.out.println(books.get(i).toString());
+						}
+						continue;
+					}
+					else if (letter.equals("e") || number == 5) {
+						s.nextLine();
+						System.out
+								.println("What author would you like to search for?");
+						List<Book> books = lc.getBookByAuthor(s.nextLine());
+						for(int i = 0; i < books.size(); i++) {
+							System.out.println(books.get(i).toString());
+						}
+						continue;
+					}
+					else if (letter.equals("f") || number == 6) {
+						s.nextLine();
+						System.out
+								.println("What genre would you like to search for?");
+						List<Book> books = lc.searchByGenre(s.nextLine());
+						for(int i = 0; i < books.size(); i++) {
+							System.out.println(books.get(i).toString());
+						}
+						continue;
+					}
+					else if (letter.equals("g")) {
+						System.out.println("What user needs to be upgraded?");
+						System.out.println(lc.changeAccount(s.next(), 1));
+						continue;
+					}
+					else if (letter.equals("h")) {
+						System.out.println(lc.listUsers());
+						continue;
+					}
+					else if (letter.equals("i")) {
+						System.out
+								.println("Please provide the genre of the new shelf, followed by the capacity of the shelf");
+						lc.createShelf(s.next(), s.nextInt());
+						System.out.println("Shelf added");
+						continue;
+					}
+					else if (letter.equals("j")) {
+						s.nextLine();
+						System.out
+								.println("Please provide the title, author, genre, and ISBN of the book on seperate lines");
+						lc.addBook(s.nextLine(), s.nextLine(), s.nextLine(),
+								s.nextLine());
+						System.out.println("Book added");
+						continue;
+					}
+					else if (letter.equals("k")) {
+						s.nextLine();
+						System.out
+								.println("Please provide title and author of book to remove");
+						lc.removeBook(s.nextLine(), s.nextLine());
+						System.out.println("Book removed");
+						continue;
+					}
+					else if (letter.equals("l")) {
+						System.out
+								.println("Provide username and title and author of book");
+						lc.checkOutBook(s.next(), s.next(), s.next());
+						System.out.println("Book has been checked out");
+						continue;
+					}
+					else if (letter.equals("m")) {
+						System.out
+								.println("Provide title and author of book being returned");
+						while (s.hasNextLine()) {
+							s.nextLine();
+						}
+						lc.returnBook(s.nextLine(), s.nextLine());
+						System.out.println("Book has been returned");
+						continue;
+					}
+					else if (letter.equals("n")) {
+						System.out.println(lc.viewAllCheckouts());
+						continue;
+					}
+					else if (letter.equals("o")) {
+						System.out.println(lc.viewRequests());
+						continue;
+					}
+					else if (letter.equals("p")) {
+						System.out.println("Provide request id");
+						lc.acceptRequest(s.nextInt());
+						System.out.println("Request accepted");
+						continue;
+					}
+					else if (letter.equals("q")) {
+
+						System.out.println("Provide request id");
+						lc.denyRequest(s.nextInt());
+						System.out.println("Request denied");
+						continue;
+					}
+					else if (number == 3) {
+						List<Book> books = lc.viewAllCheckouts();
+						for (int i = 0; i < books.size(); i++) {
+							if (books.get(i).getCheckOutAccount().getUsername()
+									.equals(username)) {
+								System.out.println(books.get(i).toString());
+							}
+						}
+
+					}
+
+					else if (number == 7) {
+						s.nextLine();
+						System.out
+								.println("Enter the title and author of the book you want to request");
+						int b = lc.requestBookFromCatelog(username, s.nextLine(),
+								s.nextLine());
+						if (b != -1) {
+							System.out.println("It has been requested");
+						}
+						else {
+							System.out.println("Book could not be requested");
+						}
+					}
+
+					else if (number == 8) {
+						System.out
+								.println("Provide title and author of the book you want to reserve");
+						lc.reserveBook(s.next(), s.next());
+						System.out.println("Book reserved");
+					}
+
+					else if (number == 9) {
+						System.out.println("Provide title and author");
+						lc.unreserveBook(s.next(), s.next());
+						System.out.println("Book unreserved");
+
+					}
+
+					if (letter.equals("r") || number == 10) {
+						dosomething = false;
+					}
+
+				}// end dosomething
+			}// end while
+
+		}
+	}
+}
